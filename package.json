@@ -11,6 +11,7 @@
   "license": "ISC",
   "description": "��#\u0000 \u0000P\u0000a\u0000y\u0000m\u0000e\u0000n\u0000t\u0000C\u0000a\u0000r\u0000d\u0000\r\u0000 \u0000",
   "dependencies": {
+    "@mollie/api-client": "^4.3.2",
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
