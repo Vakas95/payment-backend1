@@ -9,16 +9,14 @@ const mollie = createMollieClient.default({ apiKey: process.env.MOLLIE_API_KEY }
 
 const app = express();
 
-// Sert les fichiers statiques du dossier public (frontend)
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 app.use(bodyParser.json());
 
-// ✅ Route de création de paiement Mollie
 app.post('/api/create-checkout-session', async (req, res) => {
   let { amount } = req.body;
 
-  console.log("💡 Montant reçu du front :", amount); // 👈 pour vérifier le montant
+  console.log("💡 Montant reçu du front :", amount);
 
   try {
     if (!amount || isNaN(amount)) {
@@ -33,8 +31,8 @@ app.post('/api/create-checkout-session', async (req, res) => {
         value: amount,
       },
       description: 'Commande Outlet Express',
-      redirectUrl: 'http://localhost:3000/success.html',
-      cancelUrl: 'http://localhost:3000/cancel.html',
+      redirectUrl: 'https://expressoutlet.fr/success.html', // ✅ en ligne
+      cancelUrl: 'https://expressoutlet.fr/cancel.html',    // ✅ en ligne
     });
 
     res.json({ url: payment.getCheckoutUrl() });
@@ -44,7 +42,6 @@ app.post('/api/create-checkout-session', async (req, res) => {
   }
 });
 
-// Routes classiques
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
@@ -57,10 +54,11 @@ app.get('/cancel', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'cancel.html'));
 });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`✅ Serveur lancé sur le port ${PORT}`);
 });
+
 
 
 
